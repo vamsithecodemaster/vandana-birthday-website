@@ -88,6 +88,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'auto';
         initParticles();
         startFloatingHearts();
+
+        // Start background music
+        const bgMusic = document.getElementById('bgMusic');
+        if (bgMusic) {
+            bgMusic.volume = 0.4;
+            bgMusic.play().catch(() => { });
+            musicToggle.classList.remove('muted');
+        }
     });
 
     // Prevent scroll when intro is showing
@@ -201,6 +209,40 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             wishMessage.classList.add('show');
         }, 800);
+
+        // Crossfade: fade out bg music, start birthday song
+        const bgMusic = document.getElementById('bgMusic');
+        const birthdayMusic = document.getElementById('birthdayMusic');
+
+        if (bgMusic && !bgMusic.paused) {
+            // Smooth fade out over 2 seconds
+            const fadeOut = setInterval(() => {
+                if (bgMusic.volume > 0.05) {
+                    bgMusic.volume = Math.max(0, bgMusic.volume - 0.02);
+                } else {
+                    bgMusic.pause();
+                    bgMusic.volume = 0.4;
+                    clearInterval(fadeOut);
+                }
+            }, 100);
+        }
+
+        // Start birthday song after a short delay for the crossfade
+        setTimeout(() => {
+            if (birthdayMusic && birthdayMusic.paused) {
+                birthdayMusic.volume = 0;
+                birthdayMusic.play().catch(() => { });
+                // Fade in birthday song
+                const fadeIn = setInterval(() => {
+                    if (birthdayMusic.volume < 0.5) {
+                        birthdayMusic.volume = Math.min(0.5, birthdayMusic.volume + 0.02);
+                    } else {
+                        clearInterval(fadeIn);
+                    }
+                }, 100);
+                musicToggle.classList.remove('muted');
+            }
+        }, 1000);
     });
 
     function launchConfetti() {
@@ -371,9 +413,26 @@ document.addEventListener('DOMContentLoaded', () => {
         animate();
     }
 
-    // ==================== MUSIC TOGGLE (Visual Only) ====================
+    // ==================== MUSIC TOGGLE ====================
     musicToggle.addEventListener('click', () => {
-        musicToggle.classList.toggle('muted');
+        const bgMusic = document.getElementById('bgMusic');
+        const birthdayMusic = document.getElementById('birthdayMusic');
+
+        // Determine which track is active
+        const activeTrack = (birthdayMusic && !birthdayMusic.paused) ? birthdayMusic
+            : (bgMusic && !bgMusic.paused) ? bgMusic
+                : bgMusic; // default to bg music
+
+        if (activeTrack) {
+            if (activeTrack.paused) {
+                activeTrack.volume = 0.4;
+                activeTrack.play().catch(() => { });
+                musicToggle.classList.remove('muted');
+            } else {
+                activeTrack.pause();
+                musicToggle.classList.add('muted');
+            }
+        }
     });
 
     // ==================== SMOOTH SCROLL FOR NAV LINKS ====================

@@ -214,49 +214,61 @@ document.addEventListener('DOMContentLoaded', () => {
             wishMessage.classList.add('show');
         }, 800);
 
-        // Crossfade: fade out bg music, fade in birthday song
+        // Switch from bg music to birthday song
         const bgMusic = document.getElementById('bgMusic');
         const birthdayMusic = document.getElementById('birthdayMusic');
 
-        // IMPORTANT: Start birthday song IMMEDIATELY in the click handler
-        // (mobile browsers block play() inside setTimeout)
-        if (birthdayMusic) {
-            birthdayMusic.volume = 0;
-            birthdayMusic.play().catch(() => { });
-
-            // Fade in birthday song over ~2.5 seconds
-            const fadeIn = setInterval(() => {
-                let currentVol = birthdayMusic.volume;
-                if (currentVol < 0.5) {
-                    birthdayMusic.volume = Math.min(0.5, currentVol + 0.02);
-                    if (birthdayMusic.volume === currentVol) {
-                        // Volume didn't change (mobile limitation), stop fading
-                        clearInterval(fadeIn);
-                    }
-                } else {
-                    clearInterval(fadeIn);
-                }
-            }, 100);
-            musicToggle.classList.remove('muted');
+        // Detect if volume control is supported (blocked on iOS/Android)
+        let volumeControllable = false;
+        if (bgMusic) {
+            const testVol = bgMusic.volume;
+            try {
+                bgMusic.volume = testVol > 0 ? testVol - 0.001 : 0.001;
+                volumeControllable = (bgMusic.volume !== testVol);
+                bgMusic.volume = testVol; // restore
+            } catch (e) {
+                volumeControllable = false;
+            }
         }
 
-        // Simultaneously fade out bg music
-        if (bgMusic && !bgMusic.paused) {
-            const fadeOut = setInterval(() => {
-                let currentVol = bgMusic.volume;
-                if (currentVol > 0.05) {
-                    bgMusic.volume = Math.max(0, currentVol - 0.02);
-                    if (bgMusic.volume === currentVol) {
-                        // Volume didn't change (mobile limitation), pause immediately
+        if (volumeControllable) {
+            // ── DESKTOP: smooth crossfade ──
+            if (birthdayMusic) {
+                birthdayMusic.volume = 0;
+                birthdayMusic.play().catch(() => { });
+                const fadeIn = setInterval(() => {
+                    if (birthdayMusic.volume < 0.5) {
+                        birthdayMusic.volume = Math.min(0.5, birthdayMusic.volume + 0.02);
+                    } else {
+                        clearInterval(fadeIn);
+                    }
+                }, 100);
+                musicToggle.classList.remove('muted');
+            }
+            if (bgMusic && !bgMusic.paused) {
+                const fadeOut = setInterval(() => {
+                    if (bgMusic.volume > 0.05) {
+                        bgMusic.volume = Math.max(0, bgMusic.volume - 0.02);
+                    } else {
                         bgMusic.pause();
+                        bgMusic.volume = 0.4;
                         clearInterval(fadeOut);
                     }
-                } else {
-                    bgMusic.pause();
-                    bgMusic.volume = 0.4;
-                    clearInterval(fadeOut);
-                }
-            }, 100);
+                }, 100);
+            }
+        } else {
+            // ── MOBILE: stop bg music first, then play birthday song ──
+            if (bgMusic && !bgMusic.paused) {
+                bgMusic.pause();
+                bgMusic.currentTime = 0;
+            }
+            if (birthdayMusic) {
+                // Small delay so the browser fully stops bg music before starting new track
+                setTimeout(() => {
+                    birthdayMusic.play().catch(() => { });
+                }, 150);
+                musicToggle.classList.remove('muted');
+            }
         }
     });
 

@@ -97,16 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
             musicToggle.classList.remove('muted');
         }
 
-        // Pre-unlock birthday song for mobile browsers
-        // (mobile requires audio.play() during a user gesture to allow later playback)
-        const birthdayMusic = document.getElementById('birthdayMusic');
-        if (birthdayMusic) {
-            birthdayMusic.volume = 0;
-            birthdayMusic.play().then(() => {
-                birthdayMusic.pause();
-                birthdayMusic.currentTime = 0;
-            }).catch(() => { });
-        }
+        // NOTE: Do NOT pre-play the birthday song here.
+        // Mobile browsers will allow birthday song playback from the wishBtn
+        // click event directly. Pre-unlocking caused it to play immediately.
     });
 
     // Prevent scroll when intro is showing

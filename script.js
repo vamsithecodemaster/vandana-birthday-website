@@ -96,6 +96,17 @@ document.addEventListener('DOMContentLoaded', () => {
             bgMusic.play().catch(() => { });
             musicToggle.classList.remove('muted');
         }
+
+        // Pre-unlock birthday song for mobile browsers
+        // (mobile requires audio.play() during a user gesture to allow later playback)
+        const birthdayMusic = document.getElementById('birthdayMusic');
+        if (birthdayMusic) {
+            birthdayMusic.volume = 0;
+            birthdayMusic.play().then(() => {
+                birthdayMusic.pause();
+                birthdayMusic.currentTime = 0;
+            }).catch(() => { });
+        }
     });
 
     // Prevent scroll when intro is showing
@@ -210,12 +221,29 @@ document.addEventListener('DOMContentLoaded', () => {
             wishMessage.classList.add('show');
         }, 800);
 
-        // Crossfade: fade out bg music, start birthday song
+        // Crossfade: fade out bg music, fade in birthday song
         const bgMusic = document.getElementById('bgMusic');
         const birthdayMusic = document.getElementById('birthdayMusic');
 
+        // IMPORTANT: Start birthday song IMMEDIATELY in the click handler
+        // (mobile browsers block play() inside setTimeout)
+        if (birthdayMusic) {
+            birthdayMusic.volume = 0;
+            birthdayMusic.play().catch(() => { });
+
+            // Fade in birthday song over ~2.5 seconds
+            const fadeIn = setInterval(() => {
+                if (birthdayMusic.volume < 0.5) {
+                    birthdayMusic.volume = Math.min(0.5, birthdayMusic.volume + 0.02);
+                } else {
+                    clearInterval(fadeIn);
+                }
+            }, 100);
+            musicToggle.classList.remove('muted');
+        }
+
+        // Simultaneously fade out bg music
         if (bgMusic && !bgMusic.paused) {
-            // Smooth fade out over 2 seconds
             const fadeOut = setInterval(() => {
                 if (bgMusic.volume > 0.05) {
                     bgMusic.volume = Math.max(0, bgMusic.volume - 0.02);
@@ -226,23 +254,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }, 100);
         }
-
-        // Start birthday song after a short delay for the crossfade
-        setTimeout(() => {
-            if (birthdayMusic && birthdayMusic.paused) {
-                birthdayMusic.volume = 0;
-                birthdayMusic.play().catch(() => { });
-                // Fade in birthday song
-                const fadeIn = setInterval(() => {
-                    if (birthdayMusic.volume < 0.5) {
-                        birthdayMusic.volume = Math.min(0.5, birthdayMusic.volume + 0.02);
-                    } else {
-                        clearInterval(fadeIn);
-                    }
-                }, 100);
-                musicToggle.classList.remove('muted');
-            }
-        }, 1000);
     });
 
     function launchConfetti() {

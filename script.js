@@ -233,8 +233,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Fade in birthday song over ~2.5 seconds
             const fadeIn = setInterval(() => {
-                if (birthdayMusic.volume < 0.5) {
-                    birthdayMusic.volume = Math.min(0.5, birthdayMusic.volume + 0.02);
+                let currentVol = birthdayMusic.volume;
+                if (currentVol < 0.5) {
+                    birthdayMusic.volume = Math.min(0.5, currentVol + 0.02);
+                    if (birthdayMusic.volume === currentVol) {
+                        // Volume didn't change (mobile limitation), stop fading
+                        clearInterval(fadeIn);
+                    }
                 } else {
                     clearInterval(fadeIn);
                 }
@@ -245,8 +250,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Simultaneously fade out bg music
         if (bgMusic && !bgMusic.paused) {
             const fadeOut = setInterval(() => {
-                if (bgMusic.volume > 0.05) {
-                    bgMusic.volume = Math.max(0, bgMusic.volume - 0.02);
+                let currentVol = bgMusic.volume;
+                if (currentVol > 0.05) {
+                    bgMusic.volume = Math.max(0, currentVol - 0.02);
+                    if (bgMusic.volume === currentVol) {
+                        // Volume didn't change (mobile limitation), pause immediately
+                        bgMusic.pause();
+                        clearInterval(fadeOut);
+                    }
                 } else {
                     bgMusic.pause();
                     bgMusic.volume = 0.4;

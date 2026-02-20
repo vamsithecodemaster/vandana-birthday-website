@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love ❤️</title>
+    <meta name="description" content="A special birthday surprise filled with love, memories, and beautiful moments.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Spline Viewer Web Component -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+</head>
+
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- ==================== PRELOADER ==================== -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="preloader-heart">
+                <svg viewBox="0 0 100 100">
+                    <path
+                        d="M50,85 C25,65 5,50 5,30 C5,15 17,5 30,5 C38,5 45,9 50,15 C55,9 62,5 70,5 C83,5 95,15 95,30 C95,50 75,65 50,85Z"
+                        fill="none" stroke="url(#heartGradient)" stroke-width="2" class="heart-path" />
+                    <defs>
+                        <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff6b9d" />
+                            <stop offset="100%" style="stop-color:#c44569" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <p class="preloader-text">Preparing something special for you...</p>
+        </div>
+    </div>
+
+    <!-- ==================== INTRO OVERLAY ==================== -->
+    <div class="intro-overlay" id="introOverlay">
+        <div class="intro-content">
+            <div class="intro-envelope" id="introEnvelope">
+                <div class="envelope-top"></div>
+                <div class="envelope-body">
+                    <div class="envelope-letter">
+                        <p class="envelope-text">A little something made with all my heart...</p>
+                        <p class="envelope-subtext">just for you</p>
+                    </div>
+                </div>
+            </div>
+            <button class="open-btn" id="openBtn">
+                <span>Open Your Gift</span>
+                <div class="btn-sparkle"></div>
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== MUSIC TOGGLE ==================== -->
+    <button class="music-toggle" id="musicToggle" title="Toggle Music">
+        <svg class="music-icon music-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18V5l12-2v13" />
+            <circle cx="6" cy="18" r="3" />
+            <circle cx="18" cy="16" r="3" />
+        </svg>
+        <svg class="music-icon music-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18V5l12-2v13" />
+            <circle cx="6" cy="18" r="3" />
+            <circle cx="18" cy="16" r="3" />
+            <line x1="1" y1="1" x2="23" y2="23" stroke-width="2.5" />
+        </svg>
+    </button>
+
+    <!-- ==================== NAVIGATION ==================== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="#hero" class="nav-logo">❤️</a>
+            <div class="nav-links">
+                <a href="#hero" class="nav-link active">Home</a>
+                <a href="#memories" class="nav-link">Memories</a>
+                <a href="#gallery" class="nav-link">Gallery</a>
+                <a href="#letter" class="nav-link">Love Letter</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="hero" id="hero">
+        <div class="hero-bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="birthday-badge">
+                <span>🎂</span>
+                <span>Happy Birthday</span>
+                <span>🎂</span>
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line title-line-1">Happy Birthday</span>
+                <span class="title-line title-line-2">My Love</span>
+            </h1>
+            <div class="hero-divider">
+                <span class="divider-heart">♥</span>
+            </div>
+            <p class="hero-subtitle">Every moment with you is a beautiful memory I treasure forever</p>
+            <div class="hero-date">
+                <span class="date-icon">✨</span>
+                <span>February 20, 2026</span>
+                <span class="date-icon">✨</span>
+            </div>
+            <a href="#memories" class="hero-cta">
+                <span>Explore Our Memories</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                    <path d="M12 5v14M19 12l-7 7-7-7" />
+                </svg>
+            </a>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-dot"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 3D HEART SECTION ==================== -->
+    <section class="heart-3d-section" id="heart3d">
+        <div class="heart-3d-wrapper">
+            <div class="heart-3d-text">
+                <span class="heart-3d-tag">✨ Interactive 3D</span>
+                <h2 class="heart-3d-title">My Heart Beats<br>Only For You</h2>
+                <p class="heart-3d-subtitle">Move your mouse around the heart — it follows your love</p>
+            </div>
+            <div class="heart-3d-canvas-container" id="heart3dContainer">
+                <canvas id="heartCanvas"></canvas>
+                <div class="heart-3d-loader" id="heart3dLoader">
+                    <div class="heart-3d-spinner"></div>
+                    <p>Loading 3D Heart...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== QUOTE SECTION 1 ==================== -->
+    <section class="quote-section quote-section-1">
+        <div class="quote-container">
+            <div class="quote-mark">"</div>
+            <blockquote class="quote-text">
+                In all the world, there is no heart for me like yours.<br>
+                In all the world, there is no love for you like mine.
+            </blockquote>
+            <cite class="quote-author">— Maya Angelou</cite>
+            <div class="quote-decoration">
+                <span>❀</span><span>❀</span><span>❀</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MEMORIES TIMELINE ==================== -->
+    <section class="memories" id="memories">
+        <div class="section-header">
+            <span class="section-tag">Our Journey</span>
+            <h2 class="section-title">A Year of Beautiful Memories</h2>
+            <p class="section-subtitle">Every month with you added another chapter to our love story</p>
+        </div>
+
+        <div class="timeline">
+            <!-- Memory 1 -->
+            <div class="timeline-item left" data-month="March 2025">
+                <div class="timeline-dot">
+                    <span>🌸</span>
+                </div>
+                <div class="timeline-card">
+                    <div class="card-image">
+                        <img src="images/DSC08246.JPG" alt="Our Spring Moment" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-month">March 2025</span>
+                        <h3 class="card-title">New Beginnings</h3>
+                        <p class="card-text">Spring blossomed and so did our love. Every walk together felt like a new
+                            adventure waiting to unfold.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory 2 -->
+            <div class="timeline-item right" data-month="May 2025">
+                <div class="timeline-dot">
+                    <span>☀️</span>
+                </div>
+                <div class="timeline-card">
+                    <div class="card-image">
+                        <img src="images/DSC08520.JPG" alt="Summer Adventures" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-month">May 2025</span>
+                        <h3 class="card-title">Summer Adventures</h3>
+                        <p class="card-text">Sunny days, warm laughter, and your smile that outshines every sunset we
+                            watched together.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory 3 -->
+            <div class="timeline-item left" data-month="July 2025">
+                <div class="timeline-dot">
+                    <span>🌊</span>
+                </div>
+                <div class="timeline-card">
+                    <div class="card-image">
+                        <img src="images/DSC08732.JPG" alt="Beach Days" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-month">July 2025</span>
+                        <h3 class="card-title">Waves & Wonders</h3>
+                        <p class="card-text">The ocean couldn't match the depth of what I feel for you. Every wave
+                            whispered your name.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory 4 -->
+            <div class="timeline-item right" data-month="September 2025">
+                <div class="timeline-dot">
+                    <span>🍂</span>
+                </div>
+                <div class="timeline-card">
+                    <div class="card-image">
+                        <img src="images/DSC08749.JPG" alt="Autumn Love" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-month">September 2025</span>
+                        <h3 class="card-title">Golden Moments</h3>
+                        <p class="card-text">As the leaves changed colors, my love for you only grew deeper. Cozy
+                            evenings and warm embraces.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory 5 -->
+            <div class="timeline-item left" data-month="November 2025">
+                <div class="timeline-dot">
+                    <span>🎄</span>
+                </div>
+                <div class="timeline-card">
+                    <div class="card-image">
+                        <img src="images/SMD07256.JPG" alt="Holiday Spirit" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-month">November 2025</span>
+                        <h3 class="card-title">Festive Hearts</h3>
+                        <p class="card-text">The holidays sparkled brighter with you by my side. You are my greatest
+                            gift of all.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory 6 -->
+            <div class="timeline-item right" data-month="January 2026">
+                <div class="timeline-dot">
+                    <span>🎆</span>
+                </div>
+                <div class="timeline-card">
+                    <div class="card-image">
+                        <img src="images/SMD07573.JPG" alt="New Year Together" loading="lazy">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-month">January 2026</span>
+                        <h3 class="card-title">New Year, Same Love</h3>
+                        <p class="card-text">A new year began, and my resolution was simple — to love you even more than
+                            I did yesterday.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline End -->
+            <div class="timeline-end">
+                <div class="timeline-end-heart">💝</div>
+                <p>And the best is yet to come...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== QUOTE SECTION 2 ==================== -->
+    <section class="quote-section quote-section-2">
+        <div class="quote-container">
+            <div class="quote-mark">"</div>
+            <blockquote class="quote-text">
+                I saw that you were perfect, and so I loved you.<br>
+                Then I saw that you were not perfect<br>
+                and I loved you even more.
+            </blockquote>
+            <cite class="quote-author">— Angelita Lim</cite>
+            <div class="quote-decoration">
+                <span>✿</span><span>✿</span><span>✿</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PHOTO GALLERY ==================== -->
+    <section class="gallery" id="gallery">
+        <div class="section-header">
+            <span class="section-tag">Captured Moments</span>
+            <h2 class="section-title">Our Photo Gallery</h2>
+            <p class="section-subtitle">Each photo tells a story of us</p>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item gallery-item-large" onclick="openLightbox(this)">
+                <img src="images/WhatsApp Image 2026-02-20 at 10.58.10 AM.jpeg" alt="Our Favorite Photo" loading="lazy">
+                <div class="gallery-overlay">
+                    <p>My favorite view — You ❤️</p>
+                </div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <img src="images/WhatsApp Image 2026-02-20 at 10.58.44 AM.jpeg" alt="Candid Moment" loading="lazy">
+                <div class="gallery-overlay">
+                    <p>Your laugh is my favorite sound 🎵</p>
+                </div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <img src="images/WhatsApp Image 2026-02-20 at 10.59.24 AM.jpeg" alt="Date Night" loading="lazy">
+                <div class="gallery-overlay">
+                    <p>Date nights with you ✨</p>
+                </div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <img src="images/WhatsApp Image 2026-02-20 at 11.00.33 AM.jpeg" alt="Adventure Time" loading="lazy">
+                <div class="gallery-overlay">
+                    <p>Adventures together 🌍</p>
+                </div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <img src="images/WhatsApp Image 2026-02-20 at 11.01.07 AM.jpeg" alt="Sunset Together" loading="lazy">
+                <div class="gallery-overlay">
+                    <p>Golden hours with you 🌅</p>
+                </div>
+            </div>
+            <div class="gallery-item gallery-item-wide" onclick="openLightbox(this)">
+                <img src="images/WhatsApp Image 2026-02-20 at 11.02.32 AM.jpeg" alt="Our Special Place" loading="lazy">
+                <div class="gallery-overlay">
+                    <p>Our special place 🏡</p>
+                </div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <img src="images/WhatsApp Image 2026-02-20 at 11.04.57 AM (1).jpeg" alt="Celebration" loading="lazy">
+                <div class="gallery-overlay">
+                    <p>Celebrating us 🥂</p>
+                </div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <img src="images/WhatsApp Image 2026-02-20 at 11.04.57 AM (2).jpeg" alt="Cozy Moments" loading="lazy">
+                <div class="gallery-overlay">
+                    <p>Cozy moments together ☕</p>
+                </div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <img src="images/WhatsApp Image 2026-02-20 at 11.04.57 AM (3).jpeg" alt="Sweet Memories" loading="lazy">
+                <div class="gallery-overlay">
+                    <p>Memories with you 💕</p>
+                </div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <img src="images/WhatsApp Image 2026-02-20 at 11.04.57 AM (4).jpeg" alt="Together Forever"
+                    loading="lazy">
+                <div class="gallery-overlay">
+                    <p>Together, always 💖</p>
+                </div>
+            </div>
+            <div class="gallery-item" onclick="openLightbox(this)">
+                <img src="images/WhatsApp Image 2026-02-20 at 11.04.57 AM.jpeg" alt="Us" loading="lazy">
+                <div class="gallery-overlay">
+                    <p>You and me 💗</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== QUOTE SECTION 3 ==================== -->
+    <section class="quote-section quote-section-3">
+        <div class="quote-container">
+            <div class="quote-mark">"</div>
+            <blockquote class="quote-text">
+                Whatever our souls are made of,<br>
+                his and mine are the same.
+            </blockquote>
+            <cite class="quote-author">— Emily Brontë</cite>
+            <div class="quote-decoration">
+                <span>🌹</span><span>🌹</span><span>🌹</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== COUNTDOWN / AGE COUNTER ==================== -->
+    <section class="countdown-section">
+        <div class="countdown-content">
+            <h2 class="countdown-title">Reasons I Love You</h2>
+            <div class="reasons-carousel" id="reasonsCarousel">
+                <div class="reason active">
+                    <span class="reason-number">01</span>
+                    <p>The way your eyes light up when you smile</p>
+                </div>
+                <div class="reason">
+                    <span class="reason-number">02</span>
+                    <p>How you make even ordinary days feel extraordinary</p>
+                </div>
+                <div class="reason">
+                    <span class="reason-number">03</span>
+                    <p>Your kindness that touches everyone around you</p>
+                </div>
+                <div class="reason">
+                    <span class="reason-number">04</span>
+                    <p>The warmth of your hug that feels like home</p>
+                </div>
+                <div class="reason">
+                    <span class="reason-number">05</span>
+                    <p>Your strength that inspires me every single day</p>
+                </div>
+                <div class="reason">
+                    <span class="reason-number">06</span>
+                    <p>How you laugh at my terrible jokes anyway</p>
+                </div>
+                <div class="reason">
+                    <span class="reason-number">07</span>
+                    <p>The way you care so deeply about everything</p>
+                </div>
+                <div class="reason">
+                    <span class="reason-number">08</span>
+                    <p>Because you are my today & all of my tomorrows</p>
+                </div>
+            </div>
+            <div class="carousel-dots" id="carouselDots"></div>
+        </div>
+    </section>
+
+    <!-- ==================== QUOTE SECTION 4 ==================== -->
+    <section class="quote-section quote-section-4">
+        <div class="quote-container">
+            <div class="quote-mark">"</div>
+            <blockquote class="quote-text">
+                I choose you. And I'll choose you<br>
+                over and over and over.<br>
+                Without pause, without a doubt,<br>
+                in a heartbeat. I'll keep choosing you.
+            </blockquote>
+            <cite class="quote-author">— Unknown</cite>
+            <div class="quote-decoration">
+                <span>💫</span><span>💫</span><span>💫</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== LOVE LETTER ==================== -->
+    <section class="letter-section" id="letter">
+        <div class="letter-container">
+            <div class="letter-paper">
+                <div class="letter-stamp">💌</div>
+                <div class="letter-header">
+                    <span class="letter-date">February 20, 2026</span>
+                    <h2 class="letter-title">A Letter For You</h2>
+                </div>
+                <div class="letter-body">
+                    <p>My Dearest Love,</p>
+                    <p>On this special day, I want you to know just how much you mean to me. Every morning I wake up
+                        grateful that I get to share this life with you. Your smile is the first thing I want to see,
+                        and your laugh is the melody that plays in my heart.</p>
+                    <p>This past year with you has been nothing short of magical. From our quiet mornings together to
+                        our late-night conversations, every single moment has been a treasure. You've made me believe in
+                        the kind of love that poets write about.</p>
+                    <p>You are not just my partner — you are my best friend, my confidante, my safe harbor in every
+                        storm. Your kindness, your grace, your incredible spirit — they inspire me to be better every
+                        day.</p>
+                    <p>Happy Birthday, my love. May this year bring you all the joy, dreams, and magic that you deserve.
+                        And know this — I will be right here, loving you, through every moment of it.</p>
+                    <p class="letter-closing">Forever & Always Yours,</p>
+                    <p class="letter-signature">With All My Love ❤️</p>
+                </div>
+                <div class="letter-seal">
+                    <span>♥</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== QUOTE SECTION 5 ==================== -->
+    <section class="quote-section quote-section-5">
+        <div class="quote-container">
+            <div class="quote-mark">"</div>
+            <blockquote class="quote-text">
+                Grow old along with me!<br>
+                The best is yet to be.
+            </blockquote>
+            <cite class="quote-author">— Robert Browning</cite>
+            <div class="quote-decoration">
+                <span>🌿</span><span>🌿</span><span>🌿</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== BIRTHDAY WISH ==================== -->
+    <section class="wish-section">
+        <div class="wish-content">
+            <div class="cake-emoji">🎂</div>
+            <h2 class="wish-title">Make A Wish</h2>
+            <p class="wish-text">Close your eyes, take a deep breath, and make your birthday wish...</p>
+            <button class="wish-btn" id="wishBtn">
+                <span>🕯️ Blow the Candles 🕯️</span>
+            </button>
+            <div class="confetti-container" id="confettiContainer"></div>
+            <div class="wish-message" id="wishMessage">
+                <p class="wish-reveal">🎉 Happy Birthday! 🎉</p>
+                <p class="wish-subtext">May all your wishes come true, my love!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-hearts">
+                <span>❤️</span><span>❤️</span><span>❤️</span>
+            </div>
+            <p class="footer-text">Made with infinite love, just for you</p>
+            <p class="footer-year">Happy Birthday 2026</p>
+            <div class="footer-infinity">∞</div>
+        </div>
+    </footer>
+
+    <!-- ==================== LIGHTBOX MODAL ==================== -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+        <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1, event)">&#10094;</button>
+        <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1, event)">&#10095;</button>
+        <div class="lightbox-content">
+            <img id="lightboxImg" src="" alt="Full size photo">
+            <p class="lightbox-caption" id="lightboxCaption"></p>
+        </div>
+    </div>
+
+    <!-- Three.js for 3D Heart -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+    <script src="heart3d.js"></script>
+</body>
+
+</html>
